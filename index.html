@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Store</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f8fa;
+    color: #202124;
+}
+
+/* TOPO */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 12px;
+}
+
+.logo span {
+    color: #333;
+}
+
+.pesquisa {
+    width: 100%;
+    height: 45px;
+    border: none;
+    background: #eef1f5;
+    border-radius: 25px;
+    padding: 0 18px;
+    font-size: 15px;
+    outline: none;
+}
+
+/* MENU */
+
+.menu {
+    display: flex;
+    overflow-x: auto;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu button {
+    border: none;
+    background: transparent;
+    padding: 15px 18px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #666;
+}
+
+.menu button.ativo {
+    color: #1976d2;
+    border-bottom: 3px solid #1976d2;
+}
+
+/* CONTEÚDO */
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    padding: 18px 15px 80px;
+}
+
+.titulo {
+    font-size: 23px;
+    margin: 10px 0 15px;
+}
+
+/* DESTAQUE */
+
+.destaque {
+    background: linear-gradient(135deg, #1976d2, #42a5f5);
+    color: white;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 25px;
+}
+
+.destaque h2 {
+    margin-top: 0;
+}
+
+.destaque button {
+    border: none;
+    background: white;
+    color: #1976d2;
+    padding: 11px 20px;
+    border-radius: 22px;
+    font-weight: bold;
+}
+
+/* JOGOS */
+
+.jogos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.jogo {
+    background: white;
+    border-radius: 15px;
+    padding: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.icone {
+    width: 75px;
+    height: 75px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.azul {
+    background: #d9ecff;
+}
+
+.verde {
+    background: #dff5df;
+}
+
+.roxo {
+    background: #eadcff;
+}
+
+.laranja {
+    background: #ffe6c7;
+}
+
+.jogo h3 {
+    margin: 5px 0;
+    font-size: 17px;
+}
+
+.jogo p {
+    color: #777;
+    font-size: 13px;
+    margin: 4px 0;
+}
+
+.baixar {
+    display: block;
+    text-align: center;
+    background: #1976d2;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.baixar:active {
+    transform: scale(.97);
+}
+
+/* NAVEGAÇÃO INFERIOR */
+
+.nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav div {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+}
+
+.nav .selecionado {
+    color: #1976d2;
+}
+
+.nav b {
+    display: block;
+    font-size: 22px;
+}
+
+/* CELULAR */
+
+@media(max-width: 450px) {
+
+    .jogos {
+        grid-template-columns: 1fr;
+    }
+
+    .jogo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .icone {
+        min-width: 65px;
+        width: 65px;
+        height: 65px;
+        margin: 0;
+    }
+
+    .jogo .dados {
+        flex: 1;
+    }
+
+    .baixar {
+        margin-top: 7px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOPO -->
+
+<header class="topo">
+
+    <div class="logo">
+        ▶ Game<span>Store</span>
+    </div>
+
+    <input
+        id="pesquisa"
+        class="pesquisa"
+        type="search"
+        placeholder="Pesquisar jogos..."
+        oninput="pesquisar()"
+    >
+
+</header>
+
+
+<!-- CATEGORIAS -->
+
+<nav class="menu">
+
+    <button class="ativo">
+        Para você
+    </button>
+
+    <button>
+        Jogos
+    </button>
+
+    <button>
+        Ação
+    </button>
+
+    <button>
+        Corrida
+    </button>
+
+    <button>
+        RPG
+    </button>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- DESTAQUE -->
+
+    <section class="destaque">
+
+        <h2>🎮 Jogos em destaque</h2>
+
+        <p>
+            Encontre jogos para Android e baixe
+            diretamente pelo seu dispositivo.
+        </p>
+
+        <button onclick="mostrarMensagem()">
+            Ver jogos
+        </button>
+
+    </section>
+
+
+    <h2 class="titulo">
+        Jogos populares
+    </h2>
+
+
+    <section class="jogos" id="lista">
+
+
+        <!-- JOGO 1 -->
+
+        <article class="jogo" data-nome="Space Adventure">
+
+            <div class="icone azul">
+                🚀
+            </div>
+
+            <div class="dados">
+
+                <h3>Space Adventure</h3>
+
+                <p>Aventura espacial</p>
+                <p>⭐ 4,7</p>
+
+                <!-- TROQUE PELO LINK REAL DO APK -->
+
+                <a
+                    class="baixar"
+                    href="apks/space-adventure.apk"
+                >
+                    Instalar
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- JOGO 2 -->
+
+        <article class="jogo" data-nome="Pixel Racer">
+
+            <div class="icone verde">
+                🏎️
+            </div>
+
+            <div class="dados">
+
+                <h3>Pixel Racer</h3>
+
+                <p>Corrida</p>
+                <p>⭐ 4,6</p>
+
+                <a
+                    class="baixar"
+                    href="apks/pixel-racer.apk"
+                >
+                    Instalar
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- JOGO 3 -->
+
+        <article class="jogo" data-nome="Monster Quest">
+
+            <div class="icone roxo">
+                👾
+            </div>
+
+            <div class="dados">
+
+                <h3>Monster Quest</h3>
+
+                <p>RPG</p>
+                <p>⭐ 4,8</p>
+
+                <a
+                    class="baixar"
+                    href="apks/monster-quest.apk"
+                >
+                    Instalar
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- JOGO 4 -->
+
+        <article class="jogo" data-nome="Zombie Night">
+
+            <div class="icone laranja">
+                🧟
+            </div>
+
+            <div class="dados">
+
+                <h3>Zombie Night</h3>
+
+                <p>Terror</p>
+                <p>⭐ 4,5</p>
+
+                <a
+                    class="baixar"
+                    href="apks/zombie-night.apk"
+                >
+                    Instalar
+                </a>
+
+            </div>
+
+        </article>
+
+
+    </section>
+
+</main>
+
+
+<!-- MENU INFERIOR -->
+
+<nav class="nav">
+
+    <div class="selecionado">
+        <b>⌂</b>
+        Início
+    </div>
+
+    <div>
+        <b>🎮</b>
+        Jogos
+    </div>
+
+    <div>
+        <b>📱</b>
+        Apps
+    </div>
+
+    <div>
+        <b>📚</b>
+        Biblioteca
+    </div>
+
+</nav>
+
+
+<script>
+
+function pesquisar() {
+
+    let texto =
+        document
+        .getElementById("pesquisa")
+        .value
+        .toLowerCase();
+
+    let jogos =
+        document.querySelectorAll(".jogo");
+
+    jogos.forEach(function(jogo) {
+
+        let nome =
+            jogo.dataset.nome.toLowerCase();
+
+        if (nome.includes(texto)) {
+
+            jogo.style.display = "";
+
+        } else {
+
+            jogo.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+function mostrarMensagem() {
+
+    window.scrollTo({
+        top: 400,
+        behavior: "smooth"
+    });
+
+}
+
+</script>
+
+</body>
+  </html>
+  seu-site/
+│
+├── index.html
+│
+└── apks/
+    ├── space-adventure.apk
+    ├── pixel-racer.apk
+    ├── monster-quest.apk
+    └── zombie-night.apk
